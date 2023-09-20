@@ -47,14 +47,15 @@ std::normal_distribution<float> random_vision_range(100.0f, 30.0f);
 std::normal_distribution<float> vision_range_mutation(0.0f, 0.0025f * MUTATION_MULTIPLIER);
 
 const Range EGG_ENERGY_TRANSFER_RANGE = Range(BASE_ENERGY, 100.0f);
-std::normal_distribution<float> random_egg_energy_transfer(25.0f, 7.0f);
-std::normal_distribution<float> egg_energy_transfer_mutation(0.0f, 0.005f * MUTATION_MULTIPLIER);
+std::normal_distribution<float> random_egg_energy_transfer(17.0f, 1.0f);
+//std::normal_distribution<float> egg_energy_transfer_mutation(0.0f, 0.005f * MUTATION_MULTIPLIER);
+std::normal_distribution<float> egg_energy_transfer_mutation(0.0f, 0.0075f * MUTATION_MULTIPLIER);
 
 const Range METABOLISM_RANGE = Range(0.0f, 1.0f);
 std::normal_distribution<float> random_metabolism(5e-3, 1e-3);
 std::normal_distribution<float> metabolism_mutation(0.0f, 1e-6 * MUTATION_MULTIPLIER);
 
-const Range COLOR_RANGE = Range(30, 220);
+const Range COLOR_RANGE = Range(15, 235);
 std::normal_distribution<float> random_color(COLOR_RANGE.get_average(), 20.0f);
 std::normal_distribution<float> color_mutation(0.0f, 0.08 * MUTATION_MULTIPLIER);
 

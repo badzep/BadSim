@@ -255,7 +255,7 @@ public:
     }
 
     void stab(Cell* other_cell) {
-        other_cell->health = std::max(other_cell->health - this->radius * this->radius * this->dna.diet * COMBAT_DAMAGE_MULTIPLIER, 0.0f);
+        other_cell->health = std::max(other_cell->health - this->radius * this->radius * this->dna.diet * this->dna.diet * this->dna.diet * COMBAT_DAMAGE_MULTIPLIER, 0.0f);
     }
 
     [[nodiscard]] bool is_alive() const {
@@ -336,8 +336,8 @@ public:
     }
 
     [[nodiscard]] Vector2 get_shit_position() const {
-        return {random_originish(RNG), random_originish(RNG)};
-//        return this->polar_offset(shit_offset(RNG), random_angle(RNG));
+//        return {random_originish(RNG), random_originish(RNG)};
+        return this->polar_offset(shit_offset(RNG), random_angle(RNG));
     }
 
     [[nodiscard]] float get_waste() const {

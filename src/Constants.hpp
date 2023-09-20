@@ -31,7 +31,7 @@ constexpr unsigned short INPUT_COUNT = 7;
 constexpr unsigned short LAYER_SIZE = 15;
 constexpr unsigned short OUTPUT_COUNT = 12;
 
-constexpr float MUTATION_MULTIPLIER = 5.0f;
+constexpr float MUTATION_MULTIPLIER = 0.5f;
 
 const unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 std::default_random_engine RNG (seed);
@@ -50,29 +50,29 @@ constexpr float MOVEMENT_MULTIPLIER = 2.0f;
 
 constexpr unsigned char VISION_LINE_OPACITY = 70;
 
-constexpr float ALMOST_UNIVERSAL_ENERGY_COST_MULTIPLIER = 2.5f;
+constexpr float ALMOST_UNIVERSAL_ENERGY_COST_MULTIPLIER = 5.0f;
 constexpr float SIZE_PASSIVE_ENERGY_COST_MULTIPLIER = 2e-4f * ALMOST_UNIVERSAL_ENERGY_COST_MULTIPLIER;
-constexpr float LINEAR_SPEED_ACTIVE_ENERGY_COST_MULTIPLIER = 5.0e-4f * ALMOST_UNIVERSAL_ENERGY_COST_MULTIPLIER * 2.0f;
-constexpr float ANGULAR_SPEED_ACTIVE_ENERGY_COST_MULTIPLIER = 2.5e-4f * ALMOST_UNIVERSAL_ENERGY_COST_MULTIPLIER * 0.0f;
-constexpr float STAB_COST_MULTIPLIER = 5e-6f * ALMOST_UNIVERSAL_ENERGY_COST_MULTIPLIER;
+constexpr float LINEAR_SPEED_ACTIVE_ENERGY_COST_MULTIPLIER = 5.0e-4f * ALMOST_UNIVERSAL_ENERGY_COST_MULTIPLIER * 1.5f;
+constexpr float ANGULAR_SPEED_ACTIVE_ENERGY_COST_MULTIPLIER = 5.0e-3f * ALMOST_UNIVERSAL_ENERGY_COST_MULTIPLIER * 2.0f;
+constexpr float STAB_COST_MULTIPLIER = 5e-5f * ALMOST_UNIVERSAL_ENERGY_COST_MULTIPLIER;
 
-constexpr float LAY_EGG_COST = 1.0f;
+constexpr float LAY_EGG_COST = 0.1f;
 
-constexpr float PLANT_EFFICIENCY_COEFFICIENT = 0.75f;
-constexpr float MEAT_EFFICIENCY_COEFFICIENT = 0.99f;
+constexpr float PLANT_EFFICIENCY_COEFFICIENT = 0.20f;
+constexpr float MEAT_EFFICIENCY_COEFFICIENT = 0.80f;
 
-constexpr float WANT_STAB_THRESHOLD = 0.51f;
+constexpr float WANT_STAB_THRESHOLD = 0.8f;
 constexpr float WANT_EAT_THRESHOLD = 0.40f;
-constexpr float WANT_EGG_THRESHOLD = 0.40f;
+constexpr float WANT_EGG_THRESHOLD = 0.30f;
 
-constexpr float SHIT_WASTE_THRESHOLD = 20.0f;
+constexpr float SHIT_WASTE_THRESHOLD = 13.0f;
 constexpr float ENERGY_DEBT_DAMAGE_MULTIPLIER = 100.0f;
-constexpr float COMBAT_DAMAGE_MULTIPLIER = 0.1f;
+constexpr float COMBAT_DAMAGE_MULTIPLIER = 0.175f;
 
-constexpr float BASE_ENERGY = 15.0f;
+constexpr float BASE_ENERGY = 5.0f;
 
-std::normal_distribution<float> shit_offset(50.0f, 7.5f);
-constexpr float POSITION_DISTANCE = 2100.0f;
+std::normal_distribution<float> shit_offset(25.0f, 5.0f);
+constexpr float POSITION_DISTANCE = 1000.0f;
 std::normal_distribution<float> random_originish(0.0f, POSITION_DISTANCE);
 constexpr bool WRAP_POSITION = false;
 

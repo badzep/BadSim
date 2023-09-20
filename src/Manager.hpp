@@ -58,7 +58,7 @@ private:
         this->render_subsystem->run_thread();
 
 //        this->simulation.setup_environment();
-        this->simulation = Simulation("saves/overnight3");
+        this->simulation = Simulation("saves/unstable8");
         for (unsigned int thread_index = 0; thread_index < this->partial_processor_count; thread_index++) {
             std::shared_ptr<PartialProcessingSubsystem> partial_processor = std::make_shared<PartialProcessingSubsystem>(thread_index, this->partial_processor_count, this->simulation.get_cells(), this->simulation.get_eggs(), this->simulation.get_foods());
             this->subsystems.push(partial_processor);
