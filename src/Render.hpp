@@ -29,7 +29,8 @@ private:
 
     void init() override {
         SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-        InitWindow(WINDOW_SIZE, WINDOW_SIZE, "BadSim");
+        SetConfigFlags(FLAG_MSAA_4X_HINT);
+        InitWindow(WINDOW_SIZE, WINDOW_SIZE, "MeatColony");
         SetWindowMinSize(WINDOW_SIZE, WINDOW_SIZE);
         SetExitKey(0);
 

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.26)
-project(BadSim)
+project(MeatColony)
 set(CMAKE_CXX_STANDARD 20)
 
 # Thanks https://github.com/SasLuca/raylib-cmake-template/tree/master
