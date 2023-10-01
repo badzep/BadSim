@@ -2,6 +2,7 @@
 
 
 #include <algorithm>
+#include <filesystem>
 #include <vector>
 #include <list>
 
@@ -30,8 +31,7 @@ public:
         int i = 0;
         while (true) {
             i++;
-            Cell* cell = new Cell();
-            cell_file >> *cell;
+            Cell* cell = new Cell(cell_file);
             if (cell_file.eof()) {
                 delete cell;
                 break;
@@ -44,8 +44,7 @@ public:
 
         egg_file.open(save_path + "/eggs", std::ios::in);
         while (true) {
-            Egg* egg = new Egg();
-            egg_file >> *egg;
+            Egg* egg = new Egg(egg_file);
             if (egg_file.eof()) {
                 delete egg;
                 break;
@@ -58,8 +57,7 @@ public:
         std::ifstream meat_file;
         plant_file.open(save_path + "/plants", std::ios::in);
         while (true) {
-            Plant* food = new Plant();
-            plant_file >> *food;
+            Plant* food = new Plant(plant_file);
             if (plant_file.eof()) {
                 delete food;
                 break;
@@ -70,8 +68,7 @@ public:
 
         meat_file.open(save_path + "/meats", std::ios::in);
         while (true) {
-            Meat* food = new Meat();
-            meat_file >> *food;
+            Meat* food = new Meat(meat_file);
             if (meat_file.eof()) {
                 delete food;
                 break;
@@ -90,14 +87,14 @@ public:
         std::ofstream cell_file;
         cell_file.open(save_path + "/cells", std::ios::out);
         for (Cell* cell: this->cells) {
-            cell_file << *cell;
+            cell_file << cell;
         }
         cell_file.close();
 
         std::ofstream egg_file;
         egg_file.open(save_path + "/eggs", std::ios::out);
         for (Egg* egg: this->eggs) {
-            egg_file << *egg;
+            egg_file << egg;
         }
         egg_file.close();
 
@@ -107,9 +104,9 @@ public:
         meat_file.open(save_path + "/meats", std::ios::out);
         for (Food* food: this->foods) {
             if (food->get_food_type() == PLANT) {
-                plant_file << *food;
+                plant_file << food;
             } else {
-                meat_file << *food;
+                meat_file << food;
             }
         }
         plant_file.close();

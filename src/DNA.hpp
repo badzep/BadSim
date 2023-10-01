@@ -108,8 +108,6 @@ public:
     float weights[weight_count()];
     float biases[neuron_count()];
 
-    DNA() = default;
-
     DNA(bool _1, bool _2) {
         this->radius = RADIUS_RANGE.validate(random_radius(RNG));
         this->diet = DIET_RANGE.validate(random_diet(RNG));
@@ -130,27 +128,30 @@ public:
         }
     }
 
-    DNA(DNA<INPUT_COUNT, LAYER_SIZE, LAYER_SIZE, OUTPUT_COUNT> &parent, bool _) {
-        this->radius = RADIUS_RANGE.validate(parent.radius + radius_mutation(RNG));
-        this->diet = DIET_RANGE.validate(parent.diet + diet_mutation(RNG));
-        this->speed = SPEED_RANGE.validate(parent.speed + speed_mutation(RNG));
-        this->vision_range = VISION_RANGE.validate(parent.vision_range + vision_range_mutation(RNG));
-        this->egg_energy_transfer = EGG_ENERGY_TRANSFER_RANGE.validate(parent.egg_energy_transfer + egg_energy_transfer_mutation(RNG));
-        this->metabolism = METABOLISM_RANGE.validate(parent.metabolism + metabolism_mutation(RNG));
+    explicit DNA(std::istream &stream) {
+        stream >> this;
+    }
+    explicit DNA(DNA<INPUT_COUNT, LAYER_SIZE, LAYER_SIZE, OUTPUT_COUNT>* parent) {
+        this->radius = RADIUS_RANGE.validate(parent->radius + radius_mutation(RNG));
+        this->diet = DIET_RANGE.validate(parent->diet + diet_mutation(RNG));
+        this->speed = SPEED_RANGE.validate(parent->speed + speed_mutation(RNG));
+        this->vision_range = VISION_RANGE.validate(parent->vision_range + vision_range_mutation(RNG));
+        this->egg_energy_transfer = EGG_ENERGY_TRANSFER_RANGE.validate(parent->egg_energy_transfer + egg_energy_transfer_mutation(RNG));
+        this->metabolism = METABOLISM_RANGE.validate(parent->metabolism + metabolism_mutation(RNG));
 
-        this->red = COLOR_RANGE.validate(parent.red + color_mutation(RNG));
-        this->green = COLOR_RANGE.validate(parent.green + color_mutation(RNG));
-        this->blue = COLOR_RANGE.validate(parent.blue + color_mutation(RNG));
+        this->red = COLOR_RANGE.validate(parent->red + color_mutation(RNG));
+        this->green = COLOR_RANGE.validate(parent->green + color_mutation(RNG));
+        this->blue = COLOR_RANGE.validate(parent->blue + color_mutation(RNG));
 
         for (unsigned short weight_index = 0; weight_index < weight_count(); weight_index++) {
-            this->weights[weight_index] = parent.weights[weight_index] + weight_mutation(RNG);
+            this->weights[weight_index] = parent->weights[weight_index] + weight_mutation(RNG);
         }
         for (unsigned short bias_index = 0; bias_index < neuron_count(); bias_index++) {
-            this->biases[bias_index] = parent.biases[bias_index] + bias_mutation(RNG);
+            this->biases[bias_index] = parent->biases[bias_index] + bias_mutation(RNG);
         }
     }
 
-    ~DNA() = default;
+    ~DNA() {}
 
     void export_parameters(std::ostream &stream) const {
         for (float weight: this->weights) {
@@ -171,40 +172,40 @@ public:
         }
     }
 
-    friend std::ostream &operator<<(std::ostream &stream, const DNA<INPUT_COUNT, LAYER_SIZE, LAYER_SIZE, OUTPUT_COUNT> &dna) {
-        stream << dna.radius;
+    friend std::ostream &operator<<(std::ostream &stream, const DNA<INPUT_COUNT, LAYER_SIZE, LAYER_SIZE, OUTPUT_COUNT>* dna) {
+        stream << dna->radius;
         stream << "\n";
-        stream << dna.diet;
+        stream << dna->diet;
         stream << "\n";
-        stream << dna.speed;
+        stream << dna->speed;
         stream << "\n";
-        stream << dna.vision_range;
+        stream << dna->vision_range;
         stream << "\n";
-        stream << dna.egg_energy_transfer;
+        stream << dna->egg_energy_transfer;
         stream << "\n";
-        stream << dna.metabolism;
+        stream << dna->metabolism;
         stream << "\n";
-        stream << dna.red;
+        stream << dna->red;
         stream << "\n";
-        stream << dna.blue;
+        stream << dna->blue;
         stream << "\n";
-        stream << dna.green;
+        stream << dna->green;
         stream << "\n";
-        dna.export_parameters(stream);
+        dna->export_parameters(stream);
         return stream;
     }
 
-    friend std::istream &operator>>(std::istream &stream, DNA<INPUT_COUNT, LAYER_SIZE, LAYER_SIZE, OUTPUT_COUNT> &dna) {
-        stream >> dna.radius;
-        stream >> dna.diet;
-        stream >> dna.speed;
-        stream >> dna.vision_range;
-        stream >> dna.egg_energy_transfer;
-        stream >> dna.metabolism;
-        stream >> dna.red;
-        stream >> dna.blue;
-        stream >> dna.green;
-        dna.import_parameters(stream);
+    friend std::istream &operator>>(std::istream &stream, DNA<INPUT_COUNT, LAYER_SIZE, LAYER_SIZE, OUTPUT_COUNT>* dna) {
+        stream >> dna->radius;
+        stream >> dna->diet;
+        stream >> dna->speed;
+        stream >> dna->vision_range;
+        stream >> dna->egg_energy_transfer;
+        stream >> dna->metabolism;
+        stream >> dna->red;
+        stream >> dna->blue;
+        stream >> dna->green;
+        dna->import_parameters(stream);
         return stream;
     }
 
@@ -244,3 +245,5 @@ public:
         this->biases[index] = value;
     }
 };
+
+typedef DNA<INPUT_COUNT, LAYER_SIZE, LAYER_SIZE, OUTPUT_COUNT> DNA_t;

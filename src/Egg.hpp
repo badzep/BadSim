@@ -12,10 +12,26 @@ private:
     unsigned int age;
     float energy;
     bool hatched;
-    DNA<INPUT_COUNT, LAYER_SIZE, LAYER_SIZE, OUTPUT_COUNT> dna;
+    DNA<INPUT_COUNT, LAYER_SIZE, LAYER_SIZE, OUTPUT_COUNT>* dna;
 public:
-    Egg() {}
-    Egg(DNA<INPUT_COUNT, LAYER_SIZE, LAYER_SIZE, OUTPUT_COUNT> &_dna, const float _energy, const Vector2 _position) {
+//    Egg() {}
+
+//    Egg(DNA<INPUT_COUNT, LAYER_SIZE, LAYER_SIZE, OUTPUT_COUNT> &_dna, const float _energy, const Vector2 _position) {
+//        this->id = get_new_id();
+//        this->radius = 1;
+//        this->position.x = _position.x;
+//        this->position.y = _position.y;
+//        this->energy = _energy;
+//        this->age = 0;
+//        this->hatched = false;
+//        this->dna = DNA<INPUT_COUNT, LAYER_SIZE, LAYER_SIZE, OUTPUT_COUNT>(_dna, false);
+//        this->wrap_position();
+//    }
+    explicit Egg(std::istream &stream) {
+        stream >> this;
+    }
+
+    Egg(DNA<INPUT_COUNT, LAYER_SIZE, LAYER_SIZE, OUTPUT_COUNT>* _dna, const float _energy, const Vector2 _position) {
         this->id = get_new_id();
         this->radius = 1;
         this->position.x = _position.x;
@@ -23,7 +39,7 @@ public:
         this->energy = _energy;
         this->age = 0;
         this->hatched = false;
-        this->dna = DNA<INPUT_COUNT, LAYER_SIZE, LAYER_SIZE, OUTPUT_COUNT>(_dna, false);
+        this->dna = _dna;
         this->wrap_position();
     }
 
@@ -35,38 +51,42 @@ public:
         this->energy = _energy;
         this->age = 0;
         this->hatched = false;
-        this->dna = DNA<INPUT_COUNT, LAYER_SIZE, LAYER_SIZE, OUTPUT_COUNT>(false, false);
+        this->dna = new DNA<INPUT_COUNT, LAYER_SIZE, LAYER_SIZE, OUTPUT_COUNT>(false, false);
         this->wrap_position();
     }
 
-    friend std::ostream &operator<<(std::ostream &stream, const Egg& egg) {
-        stream << egg.id;
+    ~Egg() {
+        // actually don't delete dna since it needs to be passed on to cell, no point in copying it
+    }
+
+    friend std::ostream &operator<<(std::ostream &stream, const Egg* egg) {
+        stream << egg->id;
         stream << "\n";
-        stream << egg.radius;
+        stream << egg->radius;
         stream << "\n";
-        stream << egg.position.x;
+        stream << egg->position.x;
         stream << "\n";
-        stream << egg.position.y;
+        stream << egg->position.y;
         stream << "\n";
-        stream << egg.energy;
+        stream << egg->energy;
         stream << "\n";
-        stream << egg.age;
+        stream << egg->age;
         stream << "\n";
-        stream << egg.hatched;
+        stream << egg->hatched;
         stream << "\n";
-        stream << egg.dna;
+        stream << egg->dna;
         stream << "\n";
         return stream;
     }
-    friend std::istream &operator>>(std::istream &stream, Egg &egg) {
-        stream >> egg.id;
-        stream >> egg.radius;
-        stream >> egg.position.x;
-        stream >> egg.position.y;
-        stream >> egg.energy;
-        stream >> egg.age;
-        stream >> egg.hatched;
-        stream >> egg.dna;
+    friend std::istream &operator>>(std::istream &stream, Egg* egg) {
+        stream >> egg->id;
+        stream >> egg->radius;
+        stream >> egg->position.x;
+        stream >> egg->position.y;
+        stream >> egg->energy;
+        stream >> egg->age;
+        stream >> egg->hatched;
+        egg->dna = new DNA_t(stream);
         return stream;
     }
 
@@ -86,7 +106,7 @@ public:
         this->age++;
     }
 
-    DNA<INPUT_COUNT, LAYER_SIZE, LAYER_SIZE, OUTPUT_COUNT> &get_dna() {
+    DNA<INPUT_COUNT, LAYER_SIZE, LAYER_SIZE, OUTPUT_COUNT>* get_dna() {
         return this->dna;
     }
 

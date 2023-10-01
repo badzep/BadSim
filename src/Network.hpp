@@ -142,7 +142,9 @@ private:
     }
 
 public:
-    Network() = default;
+    explicit Network(std::istream &stream) {
+        stream >> this;
+    }
 
     explicit Network(DNA<LAYER_SIZES...>* dna) {
         for (unsigned short neuron_index = 0; neuron_index < neuron_count(); neuron_index++) {
@@ -184,14 +186,14 @@ public:
         }
     }
 
-    friend std::ostream &operator<<(std::ostream &stream, const Network<INPUT_ACTIVATION, HIDDEN_ACTIVATION, OUTPUT_ACTIVATION, INPUT_COUNT, LAYER_SIZE, LAYER_SIZE, OUTPUT_COUNT> &network) {
-        network.export_parameters(stream);
+    friend std::ostream &operator<<(std::ostream &stream, const Network<INPUT_ACTIVATION, HIDDEN_ACTIVATION, OUTPUT_ACTIVATION, INPUT_COUNT, LAYER_SIZE, LAYER_SIZE, OUTPUT_COUNT>* network) {
+        network->export_parameters(stream);
         stream << "\n";
         return stream;
     }
 
-    friend std::istream &operator>>(std::istream &stream, Network<INPUT_ACTIVATION, HIDDEN_ACTIVATION, OUTPUT_ACTIVATION, INPUT_COUNT, LAYER_SIZE, LAYER_SIZE, OUTPUT_COUNT> &network) {
-        network.import_parameters(stream);
+    friend std::istream &operator>>(std::istream &stream, Network<INPUT_ACTIVATION, HIDDEN_ACTIVATION, OUTPUT_ACTIVATION, INPUT_COUNT, LAYER_SIZE, LAYER_SIZE, OUTPUT_COUNT>* network) {
+        network->import_parameters(stream);
         return stream;
     }
 
@@ -289,3 +291,5 @@ public:
         printf("\n");
     }
 };
+
+typedef Network<INPUT_ACTIVATION, HIDDEN_ACTIVATION, OUTPUT_ACTIVATION, INPUT_COUNT, LAYER_SIZE, LAYER_SIZE, OUTPUT_COUNT> Network_t;

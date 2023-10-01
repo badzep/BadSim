@@ -18,28 +18,28 @@ protected:
     float calories;
     bool consumed;
 public:
-    friend std::ostream &operator<<(std::ostream &stream, const Food& food) {
-        stream << food.id;
+    friend std::ostream &operator<<(std::ostream &stream, const Food* food) {
+        stream << food->id;
         stream << "\n";
-        stream << food.radius;
+        stream << food->radius;
         stream << "\n";
-        stream << food.position.x;
+        stream << food->position.x;
         stream << "\n";
-        stream << food.position.y;
+        stream << food->position.y;
         stream << "\n";
-        stream << food.calories;
+        stream << food->calories;
         stream << "\n";
-        stream << food.consumed;
+        stream << food->consumed;
         stream << "\n";
         return stream;
     }
-    friend std::istream &operator>>(std::istream &stream, Food &food) {
-        stream >> food.id;
-        stream >> food.radius;
-        stream >> food.position.x;
-        stream >> food.position.y;
-        stream >> food.calories;
-        stream >> food.consumed;
+    friend std::istream &operator>>(std::istream &stream, Food* food) {
+        stream >> food->id;
+        stream >> food->radius;
+        stream >> food->position.x;
+        stream >> food->position.y;
+        stream >> food->calories;
+        stream >> food->consumed;
         return stream;
     }
     [[nodiscard]] virtual FoodType get_food_type() const {
@@ -84,7 +84,9 @@ public:
 
 class Meat: public Food {
 public:
-    Meat() {}
+    explicit Meat(std::istream &stream) {
+        stream >> this;
+    }
     Meat(const float _calories, const Vector2 _position) {
         this->id = get_new_id();
         this->id = Body::id_count;
@@ -116,7 +118,10 @@ public:
 
 class Plant: public Food {
 public:
-    Plant() {}
+//    Plant() {}
+    explicit Plant(std::istream &stream) {
+        stream >> this;
+    }
     Plant(const float _calories, const Vector2 _position) {
         this->id = get_new_id();
         this->calories = _calories;

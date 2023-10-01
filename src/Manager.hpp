@@ -26,6 +26,12 @@ constexpr float AUTO_SAVE_PERIOD = 60.0f * 30.0f; // 30 minutes
 
 class Manager {
 private:
+    enum class Stage {
+        LOAD_MENU,
+        SIMULATION
+    };
+    Stage stage = Stage::LOAD_MENU;
+
     std::shared_ptr<LoggingSubsystem> logging_subsystem;
     std::shared_ptr<RenderSubsystem> render_subsystem;
 
@@ -58,7 +64,7 @@ private:
         this->render_subsystem->run_thread();
 
 //        this->simulation.setup_environment();
-        this->simulation = Simulation("saves/unstable91");
+        this->simulation = Simulation("saves/unstable8");
         for (unsigned int thread_index = 0; thread_index < this->partial_processor_count; thread_index++) {
             std::shared_ptr<PartialProcessingSubsystem> partial_processor = std::make_shared<PartialProcessingSubsystem>(thread_index, this->partial_processor_count, this->simulation.get_cells(), this->simulation.get_eggs(), this->simulation.get_foods());
             this->subsystems.push(partial_processor);
