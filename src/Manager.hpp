@@ -43,8 +43,7 @@ private:
     std::stack<std::shared_ptr<Subsystem>> subsystems;
     std::vector<std::shared_ptr<PartialProcessingSubsystem>> partial_processors;
 
-    Simulation simulation;
-
+    Simulation simulation = Simulation("saves/unstable95");
 
     void initialize() {
         ManagerSignals::shutdown.set_data(false);
@@ -64,7 +63,7 @@ private:
         this->render_subsystem->run_thread();
 
 //        this->simulation.setup_environment();
-        this->simulation = Simulation("saves/unstable8");
+//        this->simulation = Simulation("saves/unstable95");
         for (unsigned int thread_index = 0; thread_index < this->partial_processor_count; thread_index++) {
             std::shared_ptr<PartialProcessingSubsystem> partial_processor = std::make_shared<PartialProcessingSubsystem>(thread_index, this->partial_processor_count, this->simulation.get_cells(), this->simulation.get_eggs(), this->simulation.get_foods());
             this->subsystems.push(partial_processor);
@@ -165,6 +164,7 @@ public:
             printf("Updates Per Sec: %f\n", updates_per_second);
             ticks++;
         }
+
     }
 
 

@@ -31,7 +31,7 @@ constexpr unsigned short INPUT_COUNT = 7;
 constexpr unsigned short LAYER_SIZE = 15;
 constexpr unsigned short OUTPUT_COUNT = 12;
 
-constexpr float MUTATION_MULTIPLIER = 0.5f;
+constexpr float MUTATION_MULTIPLIER = 0.3f;
 
 const unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 std::default_random_engine RNG (seed);
@@ -54,7 +54,7 @@ constexpr float ALMOST_UNIVERSAL_ENERGY_COST_MULTIPLIER = 5.0f;
 constexpr float SIZE_PASSIVE_ENERGY_COST_MULTIPLIER = 2e-4f * ALMOST_UNIVERSAL_ENERGY_COST_MULTIPLIER;
 constexpr float LINEAR_SPEED_ACTIVE_ENERGY_COST_MULTIPLIER = 5.0e-4f * ALMOST_UNIVERSAL_ENERGY_COST_MULTIPLIER * 1.5f;
 constexpr float ANGULAR_SPEED_ACTIVE_ENERGY_COST_MULTIPLIER = 5.0e-3f * ALMOST_UNIVERSAL_ENERGY_COST_MULTIPLIER * 2.0f;
-constexpr float STAB_COST_MULTIPLIER = 5e-5f * ALMOST_UNIVERSAL_ENERGY_COST_MULTIPLIER;
+constexpr float STAB_COST_MULTIPLIER = 1e-4f * ALMOST_UNIVERSAL_ENERGY_COST_MULTIPLIER;
 
 constexpr float LAY_EGG_COST = 0.1f;
 
@@ -71,10 +71,12 @@ constexpr float COMBAT_DAMAGE_MULTIPLIER = 0.175f;
 
 constexpr float BASE_ENERGY = 5.0f;
 
-std::normal_distribution<float> shit_offset(25.0f, 5.0f);
+std::normal_distribution<float> shit_offset(55.0f, 30.0f);
 constexpr float POSITION_DISTANCE = 1000.0f;
 std::normal_distribution<float> random_originish(0.0f, POSITION_DISTANCE);
 constexpr bool WRAP_POSITION = false;
+
+const int FONT_SIZE = 10;
 
 constexpr Activation INPUT_ACTIVATION = NO_ACTIVATION;
 constexpr Activation HIDDEN_ACTIVATION = LEAKY_RELU;

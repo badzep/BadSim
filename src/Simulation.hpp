@@ -25,7 +25,7 @@ public:
 
     }
 
-    Simulation(const std::string& save_path) {
+    explicit Simulation(const std::string& save_path) {
         std::ifstream cell_file;
         cell_file.open(save_path + "/cells", std::ios::in);
         int i = 0;
@@ -78,7 +78,18 @@ public:
         meat_file.close();
     }
 
-    ~Simulation() = default;
+    ~Simulation() {
+        printf("doing cell\n");
+        for (Cell* cell: this->cells) {
+            delete cell;
+        }
+        for (Egg* egg: this->eggs) {
+            delete egg;
+        }
+        for (Food* food: this->foods) {
+            delete food;
+        }
+    }
 
     void save() {
         std::filesystem::create_directory(SAVES_PATH);

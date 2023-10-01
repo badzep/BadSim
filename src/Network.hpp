@@ -14,7 +14,6 @@ const float START_LAYER_X = 70;
 const float LAYER_SPACING = 30;
 const float NEURON_SPACING = 20;
 const float START_NEURON_Y = 200;
-const int FONT_SIZE = 10;
 const Vector2 INPUT_TEXT_OFFSET = {-60, -(float) FONT_SIZE / 2};
 const Vector2 OUTPUT_TEXT_OFFSET = {-10, -(float) FONT_SIZE / 2};
 

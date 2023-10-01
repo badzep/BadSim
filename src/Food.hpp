@@ -18,6 +18,8 @@ protected:
     float calories;
     bool consumed;
 public:
+    virtual ~Food() = default;
+
     friend std::ostream &operator<<(std::ostream &stream, const Food* food) {
         stream << food->id;
         stream << "\n";
@@ -82,46 +84,12 @@ public:
     virtual float get_blue() = 0;
 };
 
-class Meat: public Food {
-public:
-    explicit Meat(std::istream &stream) {
-        stream >> this;
-    }
-    Meat(const float _calories, const Vector2 _position) {
-        this->id = get_new_id();
-        this->id = Body::id_count;
-        this->calories = _calories;
-        this->radius = std::sqrt(this->calories / 4.0f);
-        this->position.x = _position.x;
-        this->position.y = _position.y;
-        this->consumed = false;
-        this->wrap_position();
-    }
-
-    [[nodiscard]] FoodType get_food_type() const override {
-        return MEAT;
-    }
-
-    Color get_color() override {
-        return RED;
-    }
-    [[nodiscard]] float get_red() override {
-        return 255.0f;
-    }
-    [[nodiscard]] float get_blue() override {
-        return 0.0f;
-    }
-    [[nodiscard]] float get_green() override {
-        return 0.0f;
-    }
-};
-
 class Plant: public Food {
 public:
-//    Plant() {}
     explicit Plant(std::istream &stream) {
         stream >> this;
     }
+    ~Plant() override = default;
     Plant(const float _calories, const Vector2 _position) {
         this->id = get_new_id();
         this->calories = _calories;
@@ -148,5 +116,40 @@ public:
     }
     [[nodiscard]] float get_green() override {
         return 255.0f;
+    }
+};
+
+class Meat: public Food {
+public:
+    explicit Meat(std::istream &stream) {
+        stream >> this;
+    }
+    ~Meat() override = default;
+    Meat(const float _calories, const Vector2 _position) {
+        this->id = get_new_id();
+        this->id = Body::id_count;
+        this->calories = _calories;
+        this->radius = std::sqrt(this->calories / 4.0f);
+        this->position.x = _position.x;
+        this->position.y = _position.y;
+        this->consumed = false;
+        this->wrap_position();
+    }
+
+    [[nodiscard]] FoodType get_food_type() const override {
+        return MEAT;
+    }
+
+    Color get_color() override {
+        return RED;
+    }
+    [[nodiscard]] float get_red() override {
+        return 255.0f;
+    }
+    [[nodiscard]] float get_blue() override {
+        return 0.0f;
+    }
+    [[nodiscard]] float get_green() override {
+        return 0.0f;
     }
 };

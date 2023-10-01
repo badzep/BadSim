@@ -409,11 +409,10 @@ public:
         if (this->want_stab) {
             DrawLineEx(this->position, this->polar_offset(this->radius + STAB_REACH, 0), 1.0f, RED);
         }
-        DrawCircle((int) std::round(this->position.x), (int) std::round(this->position.y) , this->radius, this->dna->get_color(255));
+        DrawCircleV(this->position, this->radius, this->dna->get_color(255));
     }
 
     void draw_focus_info() {
-        const unsigned int FONT_SIZE = 10;
         Vector2 draw_position = {(.02f * (float) GetScreenWidth()), (.02f * (float) GetScreenHeight())};
         DrawTextEx(GetFontDefault(), TextFormat("Color: (%.0f, %.0f, %.0f)", this->get_red(), this->get_green(), this->get_blue()), draw_position,FONT_SIZE, 1, WHITE);
         draw_position.y += 15;

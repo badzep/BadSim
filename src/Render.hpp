@@ -229,4 +229,12 @@ public:
         return "Render Subsystem";
     }
 
+    [[nodiscard]] constexpr float warning_loop_second_threshold() const override {
+        return -1; // Disabled
+    }
+
+    [[nodiscard]] constexpr float critical_loop_second_threshold() const override {
+        return -1; // Disabled
+    }
+
 };
